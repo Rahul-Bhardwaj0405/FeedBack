@@ -1,0 +1,30 @@
+{% extends "reviews/base.html" %}
+
+{% block title %}
+Review Detail
+{% endblock %}
+
+{% block content %}
+    <h1>{{ review.user_name}}</h1>
+    <p>Rating: {{ review.rating }}</p>
+    <p>{{ review.review_text }}</p>
+    {% if is_favorite %}
+        <p> This is my Favorite!! <p/>
+    {% else %}
+        <form action="/reviews/favorite" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="review_id" value="{{ review.id }}">
+            <button> Favorite </button>  
+        </form>
+    {% endif %}
+{% endblock %}
+
+{% comment %} 1. with session we can store user specific data like favourite review of each user without directly interacting with database.
+2. What is session? ans- A session is ongoing connection between the client(browser) and the server.Onging means the dATA PERSISt and lives on 
+even if the broswer is closed in between, even if the computer is shutdown.so, session is a long-term relation between client and server,but,
+it can be cleared, deleted and reset also.so, its not forever but long living and we as a developer will decide how long it will live.
+3. Data stored in a session persist as long as the session is active or untill that data is cleared.
+4. A typicall example of session is "User Authentication status" 
+5. Never store objects in your session instead use primitive data types or dictionar or tuple.. for storing, as objects could have method which can't be serialized into json format which is done by django. 
+6. Django store data  in session  as json format.
+{% endcomment %}
